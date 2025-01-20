@@ -8,7 +8,7 @@
         set($sum,i32.add(get($sum),get($i)));
         set($i,i32.sub(get($i),1:i32));
       }
-    get($sum)
+    get($sum);
   }
   (export "helloWorld" function {0})
 )
