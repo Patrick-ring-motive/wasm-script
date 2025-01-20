@@ -1,5 +1,5 @@
 (module
-  function (result i32){
+  function (result:i32){
       let($sum:i32);
       let($i:i32);
       set($sum,0:i32);
