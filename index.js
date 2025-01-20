@@ -3,7 +3,7 @@
 const { readFileSync, writeFileSync } = require("fs");
 const Buffer = require("buffer").Buffer;
 const wabt = await require("wabt")();
-const inputWs = "main.ws";
+const inputWs = "main.w.js";
 const inputWat = "main.wat";
 const outputWasm = "main.wasm";
 const crypto = require('crypto');
@@ -114,6 +114,8 @@ function parenParse(watScript){
 
     
     //make changes to individual blocks
+
+    //resolve prefix function format
     parseMap.forEach((v,k)=>{
       let block = v;
       if(/[\w\.\$]+\([^\(\)]+\)/.test(block)){
@@ -123,8 +125,21 @@ function parenParse(watScript){
                      const pk = x.match(/@@prefixKey[^@]+@@/).shift();
                      parseMap.set(pk, parseMap.get(pk).replaceAll(',',' '));
                    }
-                   return x.replace(/([\w\.\$]+)\(([^\(\)]+)\)/,'($1 $2)')
+                   return x.replace(/([\w\.\$\\\/~]+)\(([^\(\)]+)\)/,'($1 $2)')
                      .replaceAll(',',' ')
+                 });
+      }
+      parseMap.set(k,block);
+    });
+
+    //resolve '=' as setters;
+    //make changes to individual blocks
+    parseMap.forEach((v,k)=>{
+      let block = v;
+      if(/[\w\.\$]+\s*=\s*\([^\(\)]+\)/.test(block)){
+        block = block.replace(/[\w\.\$\/~]+\s*=\s*\([^\(\)]+\)/,
+                 x=>{
+                   return x.replace(/([\w\.\$\/~]+)\s*=\s*\(([^\(\)]+)\)/,'(local.set $1 $2)');
                  });
       }
       parseMap.set(k,block);
