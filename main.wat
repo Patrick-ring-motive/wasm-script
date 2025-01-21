@@ -7,12 +7,12 @@
       (local $i i32)
       (local.set $sum (i32.const 0))
       (local.set $i (i32.const 7))
-           (block $exitf0838500563c4a55911b5fc79cbfce1b
-            (loop $whilef0838500563c4a55911b5fc79cbfce1b
-              (br_if $exitf0838500563c4a55911b5fc79cbfce1b (i32.eq (local.get $i) (i32.const 0)))
+           (block $exite8e17ccf36f443f8bd026f0459cf69bd
+            (loop $whilee8e17ccf36f443f8bd026f0459cf69bd
+              (br_if $exite8e17ccf36f443f8bd026f0459cf69bd (i32.eq (local.get $i) (i32.const 0)))
         (local.set $sum (call $add (local.get $sum) (local.get $i)))
         (local.set $i (i32.sub (local.get $i) (i32.const 1)))
-      (br $whilef0838500563c4a55911b5fc79cbfce1b)
+      (br $whilee8e17ccf36f443f8bd026f0459cf69bd)
             )
           )
     (local.get $sum)
