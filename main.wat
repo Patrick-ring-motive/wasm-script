@@ -1,18 +1,22 @@
 (module
-  (func (result i32)
+  (func $add  (param $x i32) (param $y i32) (result i32) 
+  (i32.add (local.get $x) (local.get $y))
+  )
+  (func $count  (result i32) 
       (local $sum i32)
       (local $i i32)
       (local.set $sum (i32.const 0))
       (local.set $i (i32.const 7))
-           (block $exit091d6128bc9d4e5080fcdc14309b28f4
-            (loop $while091d6128bc9d4e5080fcdc14309b28f4
-              (br_if $exit091d6128bc9d4e5080fcdc14309b28f4 (i32.eq (local.get $i) (i32.const 0)))
-        (local.set $sum (i32.add (local.get $sum) (local.get $i)))
+           (block $exitf0838500563c4a55911b5fc79cbfce1b
+            (loop $whilef0838500563c4a55911b5fc79cbfce1b
+              (br_if $exitf0838500563c4a55911b5fc79cbfce1b (i32.eq (local.get $i) (i32.const 0)))
+        (local.set $sum (call $add (local.get $sum) (local.get $i)))
         (local.set $i (i32.sub (local.get $i) (i32.const 1)))
-      (br $while091d6128bc9d4e5080fcdc14309b28f4)
+      (br $whilef0838500563c4a55911b5fc79cbfce1b)
             )
           )
     (local.get $sum)
   )
-  (export "helloWorld" (func 0))
+  (export "helloWorld" (func  $count)
+)
 )
